@@ -95,6 +95,13 @@ public class Logic {
 		System.out.println("Error, posToX row not found!");
 		return 0;
 	}
+	public int xyToPos(int x, int y){
+		int var1=x-1;
+		int var2=y-1*8;
+		int pos=x+y;
+		System.out.println(pos);
+		return pos;
+	}
 	
 	///TestMoveLegal
 	public boolean testMoveLegal(field theField, field figureTo){
@@ -143,7 +150,7 @@ public class Logic {
 					return true;
 				}
 			}else if(fieldFrom.getAranmbr()==fieldTo.getAranmbr()-16 && posToY(fieldFrom.getAranmbr())==7){
-				if(fields[fieldTo.getAranmbr()-8].getFigure()==null){
+				if(fields[fieldTo.getAranmbr()-8].getFigure()==null&&fields[fieldTo.getAranmbr()+16].getFigure()==null){
 					return true;
 				}
 			}
@@ -165,17 +172,61 @@ public class Logic {
 			}
 			return false;
 		}else if(NoColorFigure.equals("Rook")){
-			if(startX==endX){
+			if(startX==endX){ // |
+				if(startY>endY){
+					for(int i=1;i<9;i++){
+						if((i*8+fieldFrom.aranmbr)==fieldTo.aranmbr){
+							break;
+						}
+						if(fields[fieldFrom.aranmbr+(i*8)].getFigure()!=null){
+							return false;
+						}		
+					}
+					return true;
+				}	
+				if(startY<endY){
+					for(int i=1;i<9;i++){
+						int minus=i*8;
+						if((fieldFrom.aranmbr-minus)==fieldTo.aranmbr){ //All squares between clear?..
+							break;
+						}
+						if(fields[fieldFrom.aranmbr-minus].getFigure()!=null){ //Is square X clean?s
+							return false;
+						}		
+					}
+					return true;
+				}		
+			}
+			else if(startY==endY){ // ----------
+				if(startX<endX){
+					for(int i=1;i<9;i++){
+						if(fieldFrom.aranmbr+i==fieldTo.aranmbr){ //All squares between clear?..
+							break;
+						}
+						if(fields[fieldFrom.aranmbr+i].getFigure()!=null){
+							System.out.println(i);
+							return false;
+						}	
+					}
+				}
+				if(startX>endX){
+					for(int i=1;i<9;i++){
+						if(fieldFrom.aranmbr-i==fieldTo.aranmbr){ //All squares between clear?..
+							break;
+						}
+						if(fields[fieldFrom.aranmbr-i].getFigure()!=null){
+							System.out.println(i);
+							return false;
+						}	
+					}
+				}
 				return true;
 			}
-			else if(startY==endY){
-				return true;
-			}else{return false;}
-
+		return false;
+		
 		}else if(NoColorFigure.equals("Knight")){
 
 			if(startX==endX+2 || startX==endX-2){
-				System.out.println("StartX2");
 				if(startY==endY+1||startY==endY-1){
 					return true;
 				}else{return false;}
@@ -186,26 +237,195 @@ public class Logic {
 				}else{return false;}
 			}
 			return false;
+			
 		}else if(NoColorFigure.equals("Bishop")){
-			if(startX-endX==startY-endY){
+			if(startX-endX==startY-endY){ // weg: /
+				if(startY<endY){
+					for(int i=1;i<9;i++){
+						int number=i*7;
+						if(fieldFrom.aranmbr-number==fieldTo.aranmbr){ //All squares between clear?..
+							System.out.println("Break!");
+							break;
+						}
+						System.out.println(fieldTo.aranmbr);
+						System.out.println(fieldFrom.aranmbr + " with number:" + number);
+						if(fields[fieldFrom.aranmbr-number].getFigure()!=null){
+							System.out.println("something found" + number);
+							return false;
+						}	
+					}
+				}
+				if(startY>endY){
+					for(int i=1;i<9;i++){
+						int number=i*7;
+						if(fieldFrom.aranmbr+number==fieldTo.aranmbr){ //All squares between clear?..
+							System.out.println("Break!");
+							break;
+						}
+						System.out.println(fieldTo.aranmbr);
+						System.out.println(fieldFrom.aranmbr + " with number:" + number);
+						if(fields[fieldFrom.aranmbr+number].getFigure()!=null){
+							System.out.println("something found" + number);
+							return false;
+						}	
+					}
+				}
 				return true;
-			}else if(startX+startY==endX+endY){
+				
+			}else if(startX+startY==endX+endY){ // weg: \
+				if(startX>endX){
+					for(int i=1;i<9;i++){
+						int number=i*9;
+						if(fieldFrom.aranmbr-number==fieldTo.aranmbr){ //All squares between clear?..
+							System.out.println("Break!");
+							break;
+						}
+						System.out.println(fieldTo.aranmbr);
+						System.out.println(fieldFrom.aranmbr + " with number:" + number);
+						if(fields[fieldFrom.aranmbr-number].getFigure()!=null){
+							System.out.println("something found" + number);
+							return false;
+						}	
+					}
+				}
+				if(startX<endX){
+					for(int i=1;i<9;i++){
+						int number=i*9;
+						if(fieldFrom.aranmbr+number==fieldTo.aranmbr){ //All squares between clear?..
+							System.out.println("Break!");
+							break;
+						}
+						System.out.println(fieldTo.aranmbr);
+						System.out.println(fieldFrom.aranmbr + " with number:" + number);
+						if(fields[fieldFrom.aranmbr+number].getFigure()!=null){
+							System.out.println("something found" + number);
+							return false;
+						}	
+					}
+				}
 				return true;
 			}else{return false;}
+			
 		}else if(NoColorFigure.equals("Queen")){
 			//Bishop
-			if(startX-endX==startY-endY){
+			if(startX-endX==startY-endY){ // weg: /
+				if(startY<endY){
+					for(int i=1;i<9;i++){
+						int number=i*7;
+						if(fieldFrom.aranmbr-number==fieldTo.aranmbr){ //All squares between clear?..
+							System.out.println("Break!");
+							break;
+						}
+						System.out.println(fieldTo.aranmbr);
+						System.out.println(fieldFrom.aranmbr + " with number:" + number);
+						if(fields[fieldFrom.aranmbr-number].getFigure()!=null){
+							System.out.println("something found" + number);
+							return false;
+						}	
+					}
+				}
+				if(startY>endY){
+					for(int i=1;i<9;i++){
+						int number=i*7;
+						if(fieldFrom.aranmbr+number==fieldTo.aranmbr){ //All squares between clear?..
+							System.out.println("Break!");
+							break;
+						}
+						System.out.println(fieldTo.aranmbr);
+						System.out.println(fieldFrom.aranmbr + " with number:" + number);
+						if(fields[fieldFrom.aranmbr+number].getFigure()!=null){
+							System.out.println("something found" + number);
+							return false;
+						}	
+					}
+				}
 				return true;
-			}else if(startX+startY==endX+endY){
+				
+			}else if(startX+startY==endX+endY){ // weg: \
+				if(startX>endX){
+					for(int i=1;i<9;i++){
+						int number=i*9;
+						if(fieldFrom.aranmbr-number==fieldTo.aranmbr){ //All squares between clear?..
+							System.out.println("Break!");
+							break;
+						}
+						System.out.println(fieldTo.aranmbr);
+						System.out.println(fieldFrom.aranmbr + " with number:" + number);
+						if(fields[fieldFrom.aranmbr-number].getFigure()!=null){
+							System.out.println("something found" + number);
+							return false;
+						}	
+					}
+				}
+				if(startX<endX){
+					for(int i=1;i<9;i++){
+						int number=i*9;
+						if(fieldFrom.aranmbr+number==fieldTo.aranmbr){ //All squares between clear?..
+							System.out.println("Break!");
+							break;
+						}
+						System.out.println(fieldTo.aranmbr);
+						System.out.println(fieldFrom.aranmbr + " with number:" + number);
+						if(fields[fieldFrom.aranmbr+number].getFigure()!=null){
+							System.out.println("something found" + number);
+							return false;
+						}	
+					}
+				}
 				return true;
 			}
 			//Rook
-			if(startX==endX){
+			if(startX==endX){ // |
+				if(startY>endY){
+					for(int i=1;i<9;i++){
+						if((i*8+fieldFrom.aranmbr)==fieldTo.aranmbr){
+							break;
+						}
+						if(fields[fieldFrom.aranmbr+(i*8)].getFigure()!=null){
+							return false;
+						}		
+					}
+					return true;
+				}	
+				if(startY<endY){
+					for(int i=1;i<9;i++){
+						int minus=i*8;
+						if((fieldFrom.aranmbr-minus)==fieldTo.aranmbr){ //All squares between clear?..
+							break;
+						}
+						if(fields[fieldFrom.aranmbr-minus].getFigure()!=null){ //Is square X clean?s
+							return false;
+						}		
+					}
+					return true;
+				}		
+			}
+			else if(startY==endY){ // ----------
+				if(startX<endX){
+					for(int i=1;i<9;i++){
+						if(fieldFrom.aranmbr+i==fieldTo.aranmbr){ //All squares between clear?..
+							break;
+						}
+						if(fields[fieldFrom.aranmbr+i].getFigure()!=null){
+							System.out.println(i);
+							return false;
+						}	
+					}
+				}
+				if(startX>endX){
+					for(int i=1;i<9;i++){
+						if(fieldFrom.aranmbr-i==fieldTo.aranmbr){ //All squares between clear?..
+							break;
+						}
+						if(fields[fieldFrom.aranmbr-i].getFigure()!=null){
+							System.out.println(i);
+							return false;
+						}	
+					}
+				}
 				return true;
 			}
-			else if(startY==endY){
-				return true;
-			}else{return false;}
+		return false;
 
 		}else if(NoColorFigure.equals("King")){
 			if(startX==endX+1 || startX==endX || startX==endX-1){
@@ -242,3 +462,9 @@ public class Logic {
 		}
 	}
 }
+
+
+
+
+
+//Anone.. Anone... Platelet....

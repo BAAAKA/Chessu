@@ -128,8 +128,8 @@ public class GUI extends JFrame implements MouseListener{
 		l.setFigure(63, "w_Rook");
 		l.setFigure(62, "w_Knight");
 		l.setFigure(61, "w_Bishop");
-		l.setFigure(60, "w_Queen");
-		l.setFigure(59, "w_King");
+		l.setFigure(60, "w_King");
+		l.setFigure(59, "w_Queen");
 		l.setFigure(58, "w_Bishop");
 		l.setFigure(57, "w_Knight");
 		l.setFigure(56, "w_Rook");
