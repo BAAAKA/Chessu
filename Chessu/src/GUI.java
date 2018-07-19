@@ -103,6 +103,7 @@ public class GUI extends JFrame implements MouseListener{
 	}
 	
 	public void setDefaultPositions(){
+		//Needs to be looked at
 		System.out.println("Setting Default Positons");
 		
 		//Black Side

@@ -103,12 +103,12 @@ public class Logic {
 		if(!figureSameTeam(theField.getFigure(), figureTo.getFigure())){
 			return false;
 		}
-		if(!figureMove(theField, figureTo)){
+		if(!figureMove(theField, figureTo)){ 
 			return false;
 		}
-		if(!correctTurnColor(theField)){
-			return false;
-		}
+//		if(!correctTurnColor(theField)){ //Temporary disable
+//			return false;
+//		}
 		
 		
 		
@@ -135,14 +135,35 @@ public class Logic {
 		String NoColorFigure=figure.substring(2);
 		if(figure.equals("b_Pawn")){
 			if(fieldFrom.getAranmbr()==fieldTo.getAranmbr()-8){
-				return true;
-			}else{return false;}
-			
+				if(fieldTo.getFigure()==null){
+					return true;
+				}else{return false;}
+			}else if(fieldFrom.getAranmbr()==fieldTo.getAranmbr()-7 || fieldFrom.getAranmbr()==fieldTo.getAranmbr()-9){
+				if(fieldTo.getFigure()!=null){
+					return true;
+				}
+			}else if(fieldFrom.getAranmbr()==fieldTo.getAranmbr()-16 && posToY(fieldFrom.getAranmbr())==7){
+				if(fields[fieldTo.getAranmbr()-8].getFigure()==null){
+					return true;
+				}
+			}
+		return false;
 		}else if(figure.equals("w_Pawn")){
 			if(fieldFrom.getAranmbr()==fieldTo.getAranmbr()+8){
-				return true;
-			}else{return false;}
-			
+				if(fieldTo.getFigure()==null){
+					return true;
+				}else{return false;}
+			}else if(fieldFrom.getAranmbr()==fieldTo.getAranmbr()+7 || fieldFrom.getAranmbr()==fieldTo.getAranmbr()+9){
+				if(fieldTo.getFigure()!=null){
+					return true;
+				}
+			}			
+			else if(fieldFrom.getAranmbr()==fieldTo.getAranmbr()+16 && posToY(fieldFrom.getAranmbr())==2){
+				if(fields[fieldTo.getAranmbr()+8].getFigure()==null){
+					return true;
+				}
+			}
+			return false;
 		}else if(NoColorFigure.equals("Rook")){
 			if(startX==endX){
 				return true;
@@ -194,7 +215,10 @@ public class Logic {
 			}
 			return false;
 		}
-		System.out.println("Error,Loic figureMove figure not found!!!");
+		System.out.println("Error,Logic figureMove figure not found!!!");
+		System.out.println("########################################");
+		System.out.println("########################################");
+
 		return true;
 	}
 	private boolean figureSameTeam(String figureFrom, String figureTo){
