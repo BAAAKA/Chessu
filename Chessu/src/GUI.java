@@ -30,7 +30,7 @@ public class GUI extends JFrame implements MouseListener{
     
     private boolean startBlackSquare=true;
     
-    private field tempField;
+    private field selectedField;
 
 	public GUI(){
 
@@ -41,7 +41,7 @@ public class GUI extends JFrame implements MouseListener{
 		mainFrame.add(Board, BorderLayout.CENTER);
 		
 		setBordFields();
-		setDefaultPositions();
+		l.setDefaultPositions();
 		updateBoard();
 		
 		setLocation(400, 100);
@@ -102,47 +102,7 @@ public class GUI extends JFrame implements MouseListener{
 		}
 	}
 	
-	public void setDefaultPositions(){
-		//Needs to be looked at
-		System.out.println("Setting Default Positons");
-		
-		//Black Side
-		l.setFigure(0, "b_Rook");
-		l.setFigure(1, "b_Knight");
-		l.setFigure(2, "b_Bishop");
-		l.setFigure(3, "b_Queen");
-		l.setFigure(4, "b_King");
-		l.setFigure(5, "b_Bishop");
-		l.setFigure(6, "b_Knight");
-		l.setFigure(7, "b_Rook");
-		l.setFigure(8, "b_Pawn");
-		l.setFigure(9, "b_Pawn");
-		l.setFigure(10, "b_Pawn");
-		l.setFigure(11, "b_Pawn");
-		l.setFigure(12, "b_Pawn");
-		l.setFigure(13, "b_Pawn");
-		l.setFigure(14, "b_Pawn");
-		l.setFigure(15, "b_Pawn");
 
-		//White Side
-		l.setFigure(63, "w_Rook");
-		l.setFigure(62, "w_Knight");
-		l.setFigure(61, "w_Bishop");
-		l.setFigure(60, "w_King");
-		l.setFigure(59, "w_Queen");
-		l.setFigure(58, "w_Bishop");
-		l.setFigure(57, "w_Knight");
-		l.setFigure(56, "w_Rook");
-		l.setFigure(55, "w_Pawn");
-		l.setFigure(54, "w_Pawn");
-		l.setFigure(53, "w_Pawn");
-		l.setFigure(52, "w_Pawn");
-		l.setFigure(51, "w_Pawn");
-		l.setFigure(50, "w_Pawn");
-		l.setFigure(49, "w_Pawn");
-		l.setFigure(48, "w_Pawn");
-		
-	}
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
@@ -171,21 +131,21 @@ public class GUI extends JFrame implements MouseListener{
 			if(temp==panelOnTopArray[i]){
 				System.out.println("Click on field nr: " + i);
 				System.out.println("X: " + l.posToX(i) + "  Y:" + l.posToY(i));
-				if(tempField==null){
+				if(selectedField==null){
 					if(l.getField(i).getFigure()!=null){
 						System.out.println("Selecting field...");
-						tempField=l.getField(i);
+						selectedField=l.getField(i);
 					}
 				}
-				else if(tempField.getFigure()!=null){
-						if(l.testMoveLegal(tempField, l.getField(i))){
+				else if(selectedField.getFigure()!=null){
+						if(l.testMoveLegal(selectedField, l.getField(i))){
 							System.out.println("Setting Figure...");
-							l.setFigure(i, tempField.getFigure());
-							tempField.setFigure(null);
+							l.createFigure(i, selectedField.getFigure());
+							selectedField.setFigure(null);
 							updateBoard();
-							tempField=null;
+							selectedField=null;
 						}else{
-							tempField=null;
+							selectedField=null;
 							System.out.println("Move illegal!");
 						}
 				}

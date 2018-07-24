@@ -10,6 +10,43 @@ import javax.imageio.ImageIO;
 
 public class Logic {
 
+	Cfigure b_Rook1=new Cfigure("b", "Rook");
+	Cfigure b_Rook2=new Cfigure("b", "Rook");
+	Cfigure b_Knight1=new Cfigure("b", "Knight");
+	Cfigure b_Knight2=new Cfigure("b", "Knight");
+	Cfigure b_Bishop1=new Cfigure("b", "Bishop");
+	Cfigure b_Bishop2=new Cfigure("b", "Bishop");
+	Cfigure b_Queen=new Cfigure("b", "Queen");
+	Cfigure b_King=new Cfigure("b", "King");
+	
+	Cfigure b_Pawn1=new Cfigure("b", "Pawn");
+	Cfigure b_Pawn2=new Cfigure("b", "Pawn");
+	Cfigure b_Pawn3=new Cfigure("b", "Pawn");
+	Cfigure b_Pawn4=new Cfigure("b", "Pawn");
+	Cfigure b_Pawn5=new Cfigure("b", "Pawn");
+	Cfigure b_Pawn6=new Cfigure("b", "Pawn");
+	Cfigure b_Pawn7=new Cfigure("b", "Pawn");
+	Cfigure b_Pawn8=new Cfigure("b", "Pawn");
+	
+	//white
+	Cfigure w_Rook1=new Cfigure("w", "Rook");
+	Cfigure w_Rook2=new Cfigure("w", "Rook");
+	Cfigure w_Knight1=new Cfigure("w", "Knight");
+	Cfigure w_Knight2=new Cfigure("w", "Knight");
+	Cfigure w_Bishop1=new Cfigure("w", "Bishop");
+	Cfigure w_Bishop2=new Cfigure("w", "Bishop");
+	Cfigure w_Queen=new Cfigure("w", "Queen");
+	Cfigure w_King=new Cfigure("w", "King");
+	
+	Cfigure w_Pawn1=new Cfigure("w", "Pawn");
+	Cfigure w_Pawn2=new Cfigure("w", "Pawn");
+	Cfigure w_Pawn3=new Cfigure("w", "Pawn");
+	Cfigure w_Pawn4=new Cfigure("w", "Pawn");
+	Cfigure w_Pawn5=new Cfigure("w", "Pawn");
+	Cfigure w_Pawn6=new Cfigure("w", "Pawn");
+	Cfigure w_Pawn7=new Cfigure("w", "Pawn");
+	Cfigure w_Pawn8=new Cfigure("w", "Pawn");
+	
 	field[] fields=new field[64];
 	String turnColor="White";
 	public BufferedImage getCorrectFieldImage(int i, boolean startBlack){
@@ -54,12 +91,12 @@ public class Logic {
 		System.out.println("Error in getBufImage, no Image found! Path: " + Path);
 		return imageF;
 	}
-	public void setFigure(int i, String figure){
-		System.out.println("logic.setFigure Setting Figure " + figure+ " on " + i);
+	public void createFigure(int i, Cfigure figure){
+		System.out.println("logic.createFigure Setting Figure " + figure+ " on " + i);
 		fields[i].setFigure(figure);
 	}
-	public String getFigure(int i){
-		String figure = fields[i].getFigure();
+	public Cfigure getFigure(int i){
+		Cfigure figure = fields[i].getFigure();
 		return figure;
 	}
 	public field getField(int i){
@@ -103,15 +140,61 @@ public class Logic {
 		return pos;
 	}
 	
+	public void setDefaultPositions(){
+
+
+
+		System.out.println("Setting Default Positons");
+		
+		//Black Side
+		createFigure(0, b_Rook1);
+		createFigure(1, b_Knight1);
+		createFigure(2, b_Bishop1);
+		createFigure(3, b_Queen);
+		createFigure(4, b_King);
+		createFigure(5, b_Bishop2);
+		createFigure(6, b_Knight2);
+		createFigure(7, b_Rook2);
+		createFigure(8, b_Pawn1);
+		createFigure(9, b_Pawn2);
+		createFigure(10, b_Pawn3);
+		createFigure(11, b_Pawn4);
+		createFigure(12, b_Pawn5);
+		createFigure(13, b_Pawn6);
+		createFigure(14, b_Pawn7);
+		createFigure(15, b_Pawn8);
+
+				//White Side
+		createFigure(63, w_Rook1);
+		createFigure(62, w_Knight1);
+		createFigure(61, w_Bishop1);
+		createFigure(60, w_King);
+		createFigure(59, w_Queen);
+		createFigure(58, w_Bishop2);
+		createFigure(57, w_Knight2);
+		createFigure(56, w_Rook2);
+		createFigure(55, w_Pawn1);
+		createFigure(54, w_Pawn2);
+		createFigure(53, w_Pawn3);
+		createFigure(52, w_Pawn4);
+		createFigure(51, w_Pawn5);
+		createFigure(50, w_Pawn6);
+		createFigure(49, w_Pawn7);
+		createFigure(48, w_Pawn8);
+		
+	}
+	
 	///TestMoveLegal
 	public boolean testMoveLegal(field theField, field figureTo){
 		System.out.println("Testmovelegals theField " + theField.getFigure());
 		System.out.println("Testmovelegals figureTo " + figureTo.getFigure());
-		if(!figureSameTeam(theField.getFigure(), figureTo.getFigure())){
-			return false;
-		}
 		if(!figureMove(theField, figureTo)){ 
 			return false;
+		}
+		if(figureTo.getFigure()!=null){
+			if(!figureSameTeam(theField.getFigure().getTeamColor(), figureTo.getFigure().getTeamColor())){
+				return false;
+			}
 		}
 //		if(!correctTurnColor(theField)){ //Temporary disable
 //			return false;
@@ -119,14 +202,14 @@ public class Logic {
 		
 		
 		
-		endOfTurn();
+		endOfTurn(theField.getFigure());
 		return true;
 	}
 	private boolean correctTurnColor(field theField){
-		if(theField.getFigureColor().equals("b")&&turnColor.equals("Black")){
+		if(theField.getFigure().getTeamColor().equals("b")&&turnColor.equals("Black")){
 			return true;
 		}
-		else if(theField.getFigureColor().equals("w")&&turnColor.equals("White")){
+		else if(theField.getFigure().getTeamColor().equals("w")&&turnColor.equals("White")){
 			return true;
 		}else{
 			System.out.println("Wrong Turn! Turn: " + turnColor);
@@ -138,9 +221,8 @@ public class Logic {
 		int endX=posToX(fieldTo.aranmbr);
 		int startY=posToY(fieldFrom.aranmbr);
 		int endY=posToY(fieldTo.aranmbr);
-		String figure=fieldFrom.getFigure();
-		String NoColorFigure=figure.substring(2);
-		if(figure.equals("b_Pawn")){
+		String NoColorFigure=fieldFrom.getFigure().getFigureKind();
+		if(NoColorFigure.equals("Pawn") && fieldFrom.getFigure().getTeamColor().equals("b")){
 			if(fieldFrom.getAranmbr()==fieldTo.getAranmbr()-8){
 				if(fieldTo.getFigure()==null){
 					return true;
@@ -155,7 +237,7 @@ public class Logic {
 				}
 			}
 		return false;
-		}else if(figure.equals("w_Pawn")){
+		}else if(NoColorFigure.equals("Pawn") && fieldFrom.getFigure().getTeamColor().equals("w")){
 			if(fieldFrom.getAranmbr()==fieldTo.getAranmbr()+8){
 				if(fieldTo.getFigure()==null){
 					return true;
@@ -433,6 +515,20 @@ public class Logic {
 					return true;
 				}
 			}
+			if(fieldTo.aranmbr==62 && fields[61].getFigure()==null && fields[63].getFigure().hasbeenmoved==false){
+				fields[61].setFigure(w_Rook1);
+				fields[63].setFigure(null);
+				return true;
+			}
+			if(fieldTo.aranmbr==6 && fields[5].getFigure()==null && fields[7].getFigure().hasbeenmoved==false){
+				fields[5].setFigure(b_Rook2);
+				fields[7].setFigure(null);
+				return true;
+			}
+			
+			
+			
+			
 			return false;
 		}
 		System.out.println("Error,Logic figureMove figure not found!!!");
@@ -454,12 +550,14 @@ public class Logic {
 			}
 		}
 	}
-	public void endOfTurn(){
+	public void endOfTurn(Cfigure figureFrom){
 		if(turnColor=="White"){
 			turnColor="Black";
 		}else{
 			turnColor="White";
 		}
+		figureFrom.setHasbeenmoved(true);
+		
 	}
 }
 

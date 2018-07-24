@@ -2,7 +2,7 @@
 
 public class field {
 	String color;
-	String figure;
+	Cfigure figure=null;
 	int aranmbr;
 	String PathToBlack="src/images/black.jpg";
 	String PathToWhite="src/images/white.jpg";
@@ -22,7 +22,7 @@ public class field {
 	String w_King="src/images/w_King.png";
 	
 	
-	public field(String color, String figure, int aranmbr){
+	public field(String color, Cfigure figure, int aranmbr){
 		this.color=color; 
 		this.figure=figure;
 		this.aranmbr=aranmbr;
@@ -34,10 +34,10 @@ public class field {
 	public void setColor(String color) {
 		this.color = color;
 	}
-	public String getFigure() {
+	public Cfigure getFigure() {
 		return figure;
 	}
-	public void setFigure(String figure) {
+	public void setFigure(Cfigure figure) {
 		this.figure = figure;
 	}
 	public String getPathToBlack() {
@@ -60,39 +60,39 @@ public class field {
 		this.aranmbr = aranmbr;
 	}
 	public String getFigurePath(){
-		return figureToPath(figure);
+		if(figure!=null){
+			return figureToPath(figure.getFigureKind(), figure.getTeamColor());
+		}else{
+			return "nothing";
+		}
 	}
-	public String getFigureColor(){
-		String name=getFigure();
-		String firstLetter = name.substring(0, 1);
-		return firstLetter;
-	}
-	public String figureToPath(String figure){
-		if(figure=="b_Pawn"){
+	public String figureToPath(String figure, String figureTeam){
+		if(figure=="Pawn" && figureTeam.equals("b")){
 			return b_Pawn;
-		}else if(figure=="b_Knight"){
+		}else if(figure=="Knight" && figureTeam.equals("b")){
 			return b_Knight;
-		}else if(figure=="b_Bishop"){
+		}else if(figure=="Bishop" && figureTeam.equals("b")){
 			return b_Bishop;
-		}else if(figure=="b_Rook"){
+		}else if(figure=="Rook" && figureTeam.equals("b")){
 			return b_Rook;
-		}else if(figure=="b_Queen"){
+		}else if(figure=="Queen" && figureTeam.equals("b")){
 			return b_Queen;
-		}else if(figure=="b_King"){
+		}else if(figure=="King" && figureTeam.equals("b")){
 			return b_King;
-		}else if(figure=="w_Pawn"){
+		}else if(figure=="Pawn" && figureTeam.equals("w")){
 			return w_Pawn;
-		}else if(figure=="w_Knight"){
+		}else if(figure=="Knight" && figureTeam.equals("w")){
 			return w_Knight;
-		}else if(figure=="w_Bishop"){
+		}else if(figure=="Bishop" && figureTeam.equals("w")){
 			return w_Bishop;
-		}else if(figure=="w_Rook"){
+		}else if(figure=="Rook" && figureTeam.equals("w")){
 			return w_Rook;
-		}else if(figure=="w_Queen"){
+		}else if(figure=="Queen" && figureTeam.equals("w")){
 			return w_Queen;
-		}else if(figure=="w_King"){
+		}else if(figure=="King" && figureTeam.equals("w")){
 			return w_King;
 		}
+		System.out.println("Error, figureToPath, FIGURE NOT FOUND!");
 		return "nothing";
 	}
 	
