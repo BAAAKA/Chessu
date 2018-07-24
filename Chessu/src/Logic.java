@@ -92,7 +92,7 @@ public class Logic {
 		return imageF;
 	}
 	public void createFigure(int i, Cfigure figure){
-		System.out.println("logic.createFigure Setting Figure " + figure+ " on " + i);
+		System.out.println("logic.createFigure/ Setting Figure: " + figure.getFigureKind() + "  on Field: " + i);
 		fields[i].setFigure(figure);
 	}
 	public Cfigure getFigure(int i){
@@ -196,9 +196,9 @@ public class Logic {
 				return false;
 			}
 		}
-//		if(!correctTurnColor(theField)){ //Temporary disable
-//			return false;
-//		}
+		if(!correctTurnColor(theField)){ //Temporary disable
+			return false;
+		}
 		
 		
 		
@@ -515,15 +515,27 @@ public class Logic {
 					return true;
 				}
 			}
-			if(fieldTo.aranmbr==62 && fields[61].getFigure()==null && fields[63].getFigure().hasbeenmoved==false){
-				fields[61].setFigure(w_Rook1);
-				fields[63].setFigure(null);
-				return true;
-			}
-			if(fieldTo.aranmbr==6 && fields[5].getFigure()==null && fields[7].getFigure().hasbeenmoved==false){
-				fields[5].setFigure(b_Rook2);
-				fields[7].setFigure(null);
-				return true;
+			if(fieldFrom.getFigure().getHasbeenmoved()==false){
+				if(fieldTo.aranmbr==62 && fields[61].getFigure()==null && fields[63].getFigure().getHasbeenmoved()==false){
+					fields[61].setFigure(w_Rook1);
+					fields[63].setFigure(null);
+					return true;
+				}
+				if(fieldTo.aranmbr==6 && fields[5].getFigure()==null && fields[7].getFigure().getHasbeenmoved()==false){
+					fields[5].setFigure(b_Rook2);
+					fields[7].setFigure(null);
+					return true;
+				}
+				if(fieldTo.aranmbr==58 && fields[59].getFigure()==null && fields[57].getFigure()==null && fields[56].getFigure().getHasbeenmoved()==false){
+					fields[59].setFigure(w_Rook2);
+					fields[56].setFigure(null);
+					return true;
+				}
+				if(fieldTo.aranmbr==2 && fields[1].getFigure()==null && fields[3].getFigure()==null && fields[0].getFigure().getHasbeenmoved()==false){
+					fields[3].setFigure(b_Rook1);
+					fields[0].setFigure(null);
+					return true;
+				}
 			}
 			
 			

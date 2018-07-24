@@ -10,7 +10,7 @@ public class Cfigure {
 		this.figureKind=figureKind;
 	}
 
-	public boolean isHasbeenmoved() {
+	public boolean getHasbeenmoved() {
 		return hasbeenmoved;
 	}
 
